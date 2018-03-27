@@ -1,0 +1,116 @@
+html, body{
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+	font-size: 14px;
+	letter-spacing: 0.2px
+}
+
+.wrapper{
+	width: 960px;
+	margin: 0 auto;
+}
+
+p{
+	margin: 0;
+}
+
+button{
+	width: 65px;
+	margin: 0 3px;
+	border: none;
+    background: #a3d1f6;
+    padding: 5px 10px 6px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+button:hover{
+	background: #2296f3;
+}
+button:focus{
+	outline: 0;
+}
+
+.header{
+	background: #2196F3;
+	color: white;
+	padding: 10px;
+	margin: 0 0 20px 0;
+}
+
+.container{
+	border: 1px solid #f0f0f0;
+    border-radius: 2px;
+    padding: 10px;
+    display: flex;
+}
+
+.navigation{
+	padding-right: 10px;
+	border-right: 1px solid #f0f0f0;
+}
+.navigation td{
+	padding: 7px 5px;
+	border-bottom: 1px solid #f0f0f0;
+}
+.navigation td:first-of-type{
+	padding-right: 10px;
+}
+.navigation tr:last-of-type td{
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.navigation tr:first-of-type td{
+	padding-top: 0;
+}
+.result{
+	padding-left: 10px;
+}
+
+button.first{
+	background: #4CAF50;
+	color: white;
+}
+
+button.last{
+	background: #FF5722;
+	color: white;
+}
+
+.added_element{
+	list-style-type: none;
+	margin: 10px;
+	padding: 0;
+}
+
+.added_element li{
+	margin-bottom: 5px;
+}
+
+.added_element li span{
+	width: 50px;
+	display: inline-block;
+	font-size: 12px;
+}
+
+.added_element li input{
+	padding: 5px;
+	border-radius: 2px;
+	border: 1px solid lightgray;
+}
+
+#added, #search{
+	width: 100px;
+	margin: 0 0 0 10px;
+	background: #8BC34A;
+	color: white;
+}
+
+.add_element{
+	padding: 10px;
+	border: 1px solid lightgrey;
+	border-radius: 2px;
+	margin-bottom: 10px;
+}
