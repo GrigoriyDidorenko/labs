@@ -139,7 +139,7 @@ public class MotocycleController {
     @GetMapping(path = "search")
     public Object search(@RequestParam(required = false) Integer capacity,
                          @RequestParam(required = false) Integer price,
-                         @RequestParam(required = false) Integer weight,
+                         @RequestParam(required = false, name = "weight") Integer weight,
                          @RequestParam(required = false) String producer) {
         if (!Objects.isNull(capacity))
             return lab.searchCapacity(capacity);

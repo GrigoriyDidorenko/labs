@@ -245,7 +245,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
         for (int i = 0; i < motorcycles.size(); i++) {
             if (motorcycles.get(i).getId() == id) {
                 motorcycles.remove(i);
-
+                currentElementIndex = 0;
                 for (int j = 0; j < capacityIndexArray.size(); j++) {
                     if (capacityIndexArray.get(j) == i)
                         capacityIndexArray.remove(j);
@@ -272,7 +272,10 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
     }
 
     public Motorcycle getCurrentElement() {
-        return motorcycles.get(currentElementIndex);
+        if (!motorcycles.isEmpty())
+            return motorcycles.get(currentElementIndex);
+
+        return null;
     }
 
     public Motorcycle searchCapacity(int searchCapacity) {
