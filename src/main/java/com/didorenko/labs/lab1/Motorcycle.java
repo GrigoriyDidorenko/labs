@@ -1,6 +1,8 @@
 package com.didorenko.labs.lab1;
 
 import com.didorenko.labs.GenericLaboratoryWork;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -8,9 +10,12 @@ import java.util.Objects;
 /**
  * Created by g.didorenko on 22.03.2018.
  */
+
 public class Motorcycle implements GenericLaboratoryWork<Motorcycle> {
 
+    @JsonIgnore
     private static Motorcycle first;
+    @JsonIgnore
     private static int instanceCounter;
 
     private int id;
@@ -19,15 +24,24 @@ public class Motorcycle implements GenericLaboratoryWork<Motorcycle> {
     private int capacity;
     private String producer;
 
+    @JsonIgnore
     private static Motorcycle currentElement;
 
+    @JsonIgnore
     private Motorcycle nextWeight;
+    @JsonIgnore
     private Motorcycle previousWeight;
+    @JsonIgnore
     private Motorcycle nextPrice;
+    @JsonIgnore
     private Motorcycle previousPrice;
+    @JsonIgnore
     private Motorcycle nextCapacity;
+    @JsonIgnore
     private Motorcycle previousCapacity;
+    @JsonIgnore
     private Motorcycle nextProducer;
+    @JsonIgnore
     private Motorcycle previousProducer;
 
     public Motorcycle(int weight, int price, int capacity, String producer) {
@@ -45,7 +59,7 @@ public class Motorcycle implements GenericLaboratoryWork<Motorcycle> {
 
     @Override
     public Motorcycle getCurrentElement() {
-        return currentElement;
+        return new Motorcycle(currentElement.weight, currentElement.price, currentElement.capacity, currentElement.producer);
     }
 
     public void add(Motorcycle e) {

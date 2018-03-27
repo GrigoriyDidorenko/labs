@@ -121,13 +121,14 @@ public class MotocycleController {
     @PostMapping(path = "add")
     public void add(@RequestBody Motorcycle element) {
         if (lab instanceof com.didorenko.labs.lab1.Motorcycle)
-            lab.add(new com.didorenko.labs.lab1.Motorcycle(element.getWeight(), element.getPrice(), element.getCapacity(), element.getProducer()));
+            ((com.didorenko.labs.lab1.Motorcycle)lab)
+                    .add(new com.didorenko.labs.lab1.Motorcycle(element.getWeight(), element.getPrice(), element.getCapacity(), element.getProducer()));
 
-        if(lab instanceof Lab2)
-            lab.add(element);
+        if (lab instanceof Lab2)
+            ((Lab2) lab).add(element);
 
-        if(lab instanceof Lab3)
-            lab.add(new com.didorenko.labs.lab3.Motorcycle(element.getWeight(), element.getPrice(), element.getCapacity(), element.getProducer()));
+        if (lab instanceof Lab3)
+            ((Lab3) lab).add(new com.didorenko.labs.lab3.Motorcycle(element.getWeight(), element.getPrice(), element.getCapacity(), element.getProducer()));
     }
 
     @PostMapping(path = "remove/{id}")

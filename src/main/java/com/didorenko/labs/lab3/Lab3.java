@@ -5,6 +5,7 @@ import com.didorenko.labs.lab3.Motorcycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -23,6 +24,7 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
         return motorcycleRepository.findOne(currentElementIndex);
     }
 
+    @Transactional
     public void add(Motorcycle motorcycle) {
         final Motorcycle savedMotorcycle = motorcycleRepository.save(motorcycle);
 
@@ -39,6 +41,53 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
         }
 
         commonAdd(elementToInsertAfter.get(), savedMotorcycle);
+
+
+        Optional<Motorcycle> elementToInsertAfterWeight = Optional.ofNullable(motorcycleRepository.findWeightInsertionPosition(savedMotorcycle.getWeight()));
+
+        if (!elementToInsertAfterWeight.isPresent()) {
+            addLastCapacity(savedMotorcycle);
+            return;
+        }
+
+        if (isFirst(elementToInsertAfterWeight.get())) {
+            addFirst(elementToInsertAfterWeight.get(), savedMotorcycle);
+            return;
+        }
+
+        commonAdd(elementToInsertAfterWeight.get(), savedMotorcycle);
+
+
+
+        Optional<Motorcycle> elementToInsertAfterPrice = Optional.ofNullable(motorcycleRepository.findPriceInsertionPosition(savedMotorcycle.getPrice()));
+
+        if (!elementToInsertAfterPrice.isPresent()) {
+            addLastCapacity(savedMotorcycle);
+            return;
+        }
+
+        if (isFirst(elementToInsertAfterPrice.get())) {
+            addFirst(elementToInsertAfterPrice.get(), savedMotorcycle);
+            return;
+        }
+
+        commonAdd(elementToInsertAfterPrice.get(), savedMotorcycle);
+
+
+
+        Optional<Motorcycle> elementToInsertAfterProducer = Optional.ofNullable(motorcycleRepository.findProducerInsertionPosition(savedMotorcycle.getProducer()));
+
+        if (!elementToInsertAfterProducer.isPresent()) {
+            addLastCapacity(savedMotorcycle);
+            return;
+        }
+
+        if (isFirst(elementToInsertAfterProducer.get())) {
+            addFirst(elementToInsertAfterProducer.get(), savedMotorcycle);
+            return;
+        }
+
+        commonAdd(elementToInsertAfterProducer.get(), savedMotorcycle);
     }
 
     public void remove(int id) {

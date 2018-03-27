@@ -1,5 +1,8 @@
 package com.didorenko.labs.lab2;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by g.didorenko on 23.03.2018.
  */
@@ -14,7 +17,9 @@ public class Motorcycle {
     private int capacity;
     private String producer;
 
-    public Motorcycle(int weight, int price, int capacity, String producer) {
+    @JsonCreator
+    public Motorcycle(@JsonProperty("weight") int weight, @JsonProperty("price") int price,
+                      @JsonProperty("capacity") int capacity, @JsonProperty("producer") String producer) {
         id = ++instanceCounter;
         this.weight = weight;
         this.price = price;
