@@ -33,7 +33,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
             final Motorcycle motorcycle = motorcycles.get(capacityIndexArray.get(i));
             final int capacityCompare = Integer.compare(motorcycle.getCapacity(), e.getCapacity());
             if (capacityCompare > 0) {
-                capacityIndexArray.add(i > 0 ? i - 1 : 0, motorcycles.size() - 1);
+                capacityIndexArray.add(i > 0 ? i : 0, motorcycles.size() - 1);
                 isInsertedCapacity = true;
                 break;
             }
@@ -48,7 +48,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
             final Motorcycle motorcycle = motorcycles.get(priceIndexArray.get(i));
             final int priceCompare = Integer.compare(motorcycle.getPrice(), e.getPrice());
             if (priceCompare > 0) {
-                priceIndexArray.add(i > 0 ? i - 1 : 0, motorcycles.size() - 1);
+                priceIndexArray.add(i > 0 ? i : 0, motorcycles.size() - 1);
                 isInsertedPrice = true;
                 break;
             }
@@ -63,7 +63,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
             final Motorcycle motorcycle = motorcycles.get(weightIndexArray.get(i));
             final int weightCompare = Integer.compare(motorcycle.getWeight(), e.getWeight());
             if (weightCompare > 0) {
-                weightIndexArray.add(i > 0 ? i - 1 : 0, motorcycles.size() - 1);
+                weightIndexArray.add(i > 0 ? i : 0, motorcycles.size() - 1);
                 isInsertedWeight = true;
                 break;
             }
@@ -77,7 +77,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
             final Motorcycle motorcycle = motorcycles.get(producerIndexArray.get(i));
             final int producerCompare = motorcycle.getProducer().compareTo(e.getProducer());
             if (producerCompare > 0) {
-                producerIndexArray.add(i > 0 ? i - 1 : 0, motorcycles.size() - 1);
+                producerIndexArray.add(i > 0 ? i : 0, motorcycles.size() - 1);
                 isInsertedProducer = true;
                 break;
             }
@@ -89,6 +89,12 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
 
     public Motorcycle nextCapacity() {
         for (int i = 0; i < capacityIndexArray.size(); i++) {
+
+            // 3 2 1 5
+
+            // 2 1 0 3
+
+            // current = 2
             if (capacityIndexArray.get(i) == currentElementIndex && i < capacityIndexArray.size() - 1) {
                 currentElementIndex = capacityIndexArray.get(i + 1);
                 return motorcycles.get(currentElementIndex);
@@ -196,7 +202,7 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
         if (producerIndexArray.isEmpty())
             return null;
 
-        currentElementIndex = producerIndexArray.getFirst();
+        currentElementIndex = priceIndexArray.getFirst();
         return motorcycles.get(currentElementIndex);
     }
 
@@ -244,8 +250,12 @@ public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
     public void remove(int id) {
         for (int i = 0; i < motorcycles.size(); i++) {
             if (motorcycles.get(i).getId() == id) {
-                motorcycles.remove(i);
-                currentElementIndex = 0;
+//                motorcycles.remove(i);
+                if (currentElementIndex == i)
+                    if (i > 0)
+                        currentElementIndex = i - 1;
+                    else
+                        currentElementIndex = i + 1;
                 for (int j = 0; j < capacityIndexArray.size(); j++) {
                     if (capacityIndexArray.get(j) == i)
                         capacityIndexArray.remove(j);

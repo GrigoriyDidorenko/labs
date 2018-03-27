@@ -8,28 +8,28 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface MotorcycleRepository extends JpaRepository<Motorcycle, Integer> {
 
-    @Query(value = "select * from motorcycles m where m.previous_capacity is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.previous_capacity is null limit 1", nativeQuery = true)
     Motorcycle findFirstCapacity();
 
-    @Query(value = "select * from motorcycles m where m.next_capacity is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.next_capacity is null limit 1", nativeQuery = true)
     Motorcycle findLastCapacity();
 
-    @Query(value = "select * from motorcycles m where m.previous_weight is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.previous_weight is null limit 1", nativeQuery = true)
     Motorcycle findFirstWeight();
 
-    @Query(value = "select * from motorcycles m where m.next_weight is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.next_weight is null limit 1", nativeQuery = true)
     Motorcycle findLastWeight();
 
-    @Query(value = "select * from motorcycles m where m.previous_price is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.previous_price is null limit 1", nativeQuery = true)
     Motorcycle findFirstPrice();
 
-    @Query(value = "select * from motorcycles m where m.next_price is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.next_price is null limit 1", nativeQuery = true)
     Motorcycle findLastPrice();
 
-    @Query(value = "select * from motorcycles m where m.previous_producer is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.previous_producer is null limit 1", nativeQuery = true)
     Motorcycle findFirstProducer();
 
-    @Query(value = "select * from motorcycles m where m.next_producer is null", nativeQuery = true)
+    @Query(value = "select * from motorcycles m where m.next_producer is null limit 1", nativeQuery = true)
     Motorcycle findLastProducer();
 
 

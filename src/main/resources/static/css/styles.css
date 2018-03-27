@@ -79,33 +79,42 @@ button.last{
 	color: white;
 }
 
-.added_element{
+.added_element, .search_element, .delete_element{
 	list-style-type: none;
 	margin: 10px;
 	padding: 0;
 }
 
-.added_element li{
+.added_element li, .search_element li, .delete_element li{
 	margin-bottom: 5px;
 }
 
-.added_element li span{
+.added_element li span, .search_element li span, .delete_element li span{
 	width: 50px;
 	display: inline-block;
 	font-size: 12px;
 }
 
-.added_element li input{
+.added_element li input, .search_element li input, .delete_element li input{
 	padding: 5px;
 	border-radius: 2px;
 	border: 1px solid lightgray;
 }
 
-#added, #search{
-	width: 100px;
+#added, #search, #delete{
+	width: 120px;
 	margin: 0 0 0 10px;
 	background: #8BC34A;
 	color: white;
+	padding: 8px;
+}
+
+#delete{
+	background: #F44336;
+}
+
+#search{
+	background: #00BCD4;
 }
 
 .add_element{
@@ -113,4 +122,14 @@ button.last{
 	border: 1px solid lightgrey;
 	border-radius: 2px;
 	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+#result{
+	margin-bottom: 20px;
+}
+
+.features{
+	display: flex;
+	flex-wrap: wrap;
 }
