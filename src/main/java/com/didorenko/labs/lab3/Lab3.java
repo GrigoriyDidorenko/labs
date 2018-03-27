@@ -1,5 +1,6 @@
 package com.didorenko.labs.lab3;
 
+import com.didorenko.labs.GenericLaboratoryWork;
 import com.didorenko.labs.lab3.Motorcycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,12 @@ import java.util.Optional;
  */
 
 @Component
-public class Lab3 {
+public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
 
     @Autowired
     private MotorcycleRepository motorcycleRepository;
 
-    private int currentElementIndex;
+    private int currentElementIndex = 1;
 
     public Motorcycle getCurrentElement() {
         return motorcycleRepository.findOne(currentElementIndex);
@@ -147,7 +148,6 @@ public class Lab3 {
 
         return motorcycleRepository.findOne(currentElementIndex);
     }
-
 
 
     public Motorcycle getLastPrice() {

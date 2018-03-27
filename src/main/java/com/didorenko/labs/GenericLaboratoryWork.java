@@ -5,53 +5,53 @@ import com.didorenko.labs.lab3.Motorcycle;
 /**
  * Created by g.didorenko on 26.03.2018.
  */
-interface GenericLaboratoryWork {
+public interface GenericLaboratoryWork<T> {
 
-    Motorcycle getCurrentElement();
+    T getCurrentElement();
 
-    void add(Motorcycle motorcycle);
+    void add(T motorcycle);
 
     void remove(int id);
 
-    Motorcycle getLastCapacity();
+    T getLastCapacity();
 
-    Motorcycle getFirstCapacity();
+    T getFirstCapacity();
 
-    Motorcycle nextCapacity();
+    T nextCapacity();
 
-    Motorcycle previousCapacity();
+    T previousCapacity();
 
-    Motorcycle getLastWeight();
+    T getLastWeight();
 
-    Motorcycle getFirstWeight();
+    T getFirstWeight();
 
-    Motorcycle nextWeight();
+    T nextWeight();
 
-    Motorcycle previousWeight();
-
-
-    Motorcycle getLastPrice();
-
-    Motorcycle getFirstPrice();
-
-    Motorcycle nextPrice();
-
-    Motorcycle previousPrice();
+    T previousWeight();
 
 
-    Motorcycle getLastProducer();
+    T getLastPrice();
 
-    Motorcycle getFirstProducer();
+    T getFirstPrice();
 
-    Motorcycle nextProducer();
+    T nextPrice();
 
-    Motorcycle previousProducer();
+    T previousPrice();
 
-    Motorcycle searchCapacity(int capacity);
 
-    Motorcycle searchWeight(int weight);
+    T getLastProducer();
 
-    Motorcycle searchPrice(int price);
+    T getFirstProducer();
 
-    Motorcycle searchProducer(String producer);
+    T nextProducer();
+
+    T previousProducer();
+
+    T searchCapacity(int capacity);
+
+    T searchWeight(int weight);
+
+    T searchPrice(int price);
+
+    T searchProducer(String producer);
 }

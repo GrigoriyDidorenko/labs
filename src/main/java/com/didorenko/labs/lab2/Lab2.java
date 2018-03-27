@@ -1,5 +1,7 @@
 package com.didorenko.labs.lab2;
 
+import com.didorenko.labs.GenericLaboratoryWork;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -8,7 +10,7 @@ import java.util.List;
 /**
  * Created by g.didorenko on 23.03.2018.
  */
-public class Lab2 {
+public class Lab2 implements GenericLaboratoryWork<Motorcycle> {
 
     private List<Motorcycle> motorcycles = new ArrayList<>();
 

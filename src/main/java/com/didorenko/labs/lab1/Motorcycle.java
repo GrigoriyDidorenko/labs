@@ -1,12 +1,14 @@
 package com.didorenko.labs.lab1;
 
+import com.didorenko.labs.GenericLaboratoryWork;
+
 import java.util.Collection;
 import java.util.Objects;
 
 /**
  * Created by g.didorenko on 22.03.2018.
  */
-public class Motorcycle {
+public class Motorcycle implements GenericLaboratoryWork<Motorcycle> {
 
     private static Motorcycle first;
     private static int instanceCounter;
@@ -41,10 +43,17 @@ public class Motorcycle {
     }
 
 
+    @Override
+    public Motorcycle getCurrentElement() {
+        return currentElement;
+    }
+
     public void add(Motorcycle e) {
         if (Objects.isNull(first))
             currentElement = first = e;
         else {
+
+
             final int capacityCompare = Integer.compare(first.capacity, e.capacity);
             Motorcycle currentElement = first;
             if (capacityCompare > 0) {
@@ -82,6 +91,126 @@ public class Motorcycle {
                     }
 
                     currentElement = currentElement.nextCapacity;
+                }
+            }
+
+
+            final int weightCompare = Integer.compare(first.weight, e.weight);
+            if (weightCompare > 0) {
+                while (true) {
+                    if (Objects.isNull(currentElement.previousWeight)) {
+                        currentElement.previousWeight = e;
+                        e.nextWeight = currentElement;
+                        break;
+                    }
+
+                    if ((Integer.compare(currentElement.weight, e.weight) <= 0)) {
+                        currentElement.nextWeight.previousWeight = e;
+                        e.nextWeight = currentElement.nextWeight;
+                        e.previousWeight = currentElement;
+                        currentElement.nextWeight = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.previousWeight;
+                }
+            } else {
+                while (true) {
+                    if (Objects.isNull(currentElement.nextWeight)) {
+                        currentElement.nextWeight = e;
+                        e.previousWeight = currentElement;
+                        break;
+                    }
+
+                    if ((Integer.compare(currentElement.weight, e.weight) > 0)) {
+                        currentElement.previousWeight.nextWeight = e;
+                        e.nextWeight = currentElement;
+                        e.previousWeight = currentElement.previousWeight;
+                        currentElement.previousWeight = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.nextWeight;
+                }
+            }
+
+
+            final int priceCompare = Integer.compare(first.price, e.price);
+            if (priceCompare > 0) {
+                while (true) {
+                    if (Objects.isNull(currentElement.previousPrice)) {
+                        currentElement.previousPrice = e;
+                        e.nextPrice = currentElement;
+                        break;
+                    }
+
+                    if ((Integer.compare(currentElement.price, e.price) <= 0)) {
+                        currentElement.nextPrice.previousPrice = e;
+                        e.nextPrice = currentElement.nextPrice;
+                        e.previousPrice = currentElement;
+                        currentElement.nextPrice = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.previousPrice;
+                }
+            } else {
+                while (true) {
+                    if (Objects.isNull(currentElement.nextPrice)) {
+                        currentElement.nextPrice = e;
+                        e.previousPrice = currentElement;
+                        break;
+                    }
+
+                    if ((Integer.compare(currentElement.price, e.price) > 0)) {
+                        currentElement.previousPrice.nextPrice = e;
+                        e.nextPrice = currentElement;
+                        e.previousPrice = currentElement.previousPrice;
+                        currentElement.previousPrice = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.nextPrice;
+                }
+            }
+
+
+            final int producerCompare = first.producer.compareTo(e.producer);
+            if (producerCompare > 0) {
+                while (true) {
+                    if (Objects.isNull(currentElement.previousProducer)) {
+                        currentElement.previousProducer = e;
+                        e.nextProducer = currentElement;
+                        break;
+                    }
+
+                    if (currentElement.producer.compareTo(e.producer) <= 0) {
+                        currentElement.nextProducer.previousProducer = e;
+                        e.nextProducer = currentElement.nextProducer;
+                        e.previousProducer = currentElement;
+                        currentElement.nextProducer = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.previousProducer;
+                }
+            } else {
+                while (true) {
+                    if (Objects.isNull(currentElement.nextProducer)) {
+                        currentElement.nextProducer = e;
+                        e.previousProducer = currentElement;
+                        break;
+                    }
+
+                    if (currentElement.producer.compareTo(e.producer) > 0) {
+                        currentElement.previousProducer.nextProducer = e;
+                        e.nextProducer = currentElement;
+                        e.previousProducer = currentElement.previousProducer;
+                        currentElement.previousProducer = e;
+                        break;
+                    }
+
+                    currentElement = currentElement.nextProducer;
                 }
             }
         }

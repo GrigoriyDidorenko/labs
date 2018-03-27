@@ -1,5 +1,6 @@
 package com.didorenko.labs.util;
 
+import com.didorenko.labs.GenericLaboratoryWork;
 import com.didorenko.labs.lab2.Lab2;
 import com.didorenko.labs.lab3.Lab3;
 import com.didorenko.labs.lab3.Motorcycle;
@@ -25,8 +26,10 @@ public class Initializer {
     @Autowired
     private MotorcycleRepository motorcycleRepository;
 
-    private List<com.didorenko.labs.lab1.Motorcycle> firstMotorcycles;
+    private List<com.didorenko.labs.lab1.Motorcycle> lab1;
     private Lab2 lab2 = new Lab2();
+
+    @Autowired
     private Lab3 lab3;
 
     @PostConstruct
@@ -34,11 +37,11 @@ public class Initializer {
         switch (laboratoryWorkName) {
             case "lab1": {
                 final List<Motorcycle> allMotorcycles = motorcycleRepository.findAll();
-                List<com.didorenko.labs.lab1.Motorcycle> motorcycles = allMotorcycles.stream()
+                lab1 = allMotorcycles.stream()
                         .map(motorcycle -> new com.didorenko.labs.lab1.Motorcycle(motorcycle.getWeight(), motorcycle.getPrice(), motorcycle.getCapacity(), motorcycle.getProducer()))
                         .collect(Collectors.toList());
 
-                motorcycles.get(0).addAll(motorcycles.subList(1, motorcycles.size()));
+                lab1.get(0).addAll(lab1);
                 break;
             }
             case "lab2": {
@@ -56,8 +59,17 @@ public class Initializer {
         }
     }
 
-    public Lab2 getLab2() {
-        return lab2;
+    public GenericLaboratoryWork getLab() {
+        if (laboratoryWorkName.equalsIgnoreCase("lab1"))
+            return lab1.get(0);
+
+        if (laboratoryWorkName.equalsIgnoreCase("lab2"))
+            return lab2;
+
+        if (laboratoryWorkName.equalsIgnoreCase("lab3"))
+            return lab3;
+
+        return null;
     }
 
 }
