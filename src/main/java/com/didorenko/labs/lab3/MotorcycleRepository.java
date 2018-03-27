@@ -38,31 +38,31 @@ public interface MotorcycleRepository extends JpaRepository<Motorcycle, Integer>
     Motorcycle findByCapacity(int capacity);
 
     @Query(value = "select * from motorcycles m " +
-            "where m.capacity >= ?1 " +
+            "where m.capacity >= ?2 and m.id <> ?1 " +
             "ORDER BY m.capacity " +
             "LIMIT 1", nativeQuery = true)
-    Motorcycle findCapacityInsertionPosition(int capacity);
+    Motorcycle findCapacityInsertionPosition(int id, int capacity);
 
 
     @Query(value = "select * from motorcycles m " +
-            "where m.capacity >= ?1 " +
+            "where m.weight >= ?2 and m.id <> ?1 " +
             "ORDER BY m.capacity " +
             "LIMIT 1", nativeQuery = true)
-    Motorcycle findWeightInsertionPosition(int weight);
+    Motorcycle findWeightInsertionPosition(int id, int weight);
 
 
     @Query(value = "select * from motorcycles m " +
-            "where m.capacity >= ?1 " +
+            "where m.price >= ?2 and m.id <> ?1 " +
             "ORDER BY m.capacity " +
             "LIMIT 1", nativeQuery = true)
-    Motorcycle findPriceInsertionPosition(int price);
+    Motorcycle findPriceInsertionPosition(int id, int price);
 
 
     @Query(value = "select * from motorcycles m " +
-            "where m.capacity >= ?1 " +
+            "where m.producer >= ?2 and m.id <> ?1 " +
             "ORDER BY m.capacity " +
             "LIMIT 1", nativeQuery = true)
-    Motorcycle findProducerInsertionPosition(String producer);
+    Motorcycle findProducerInsertionPosition(int id, String producer);
 
     Motorcycle findByProducer(String producer);
 

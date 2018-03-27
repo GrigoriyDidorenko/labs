@@ -1,7 +1,6 @@
 package com.didorenko.labs.lab3;
 
 import com.didorenko.labs.GenericLaboratoryWork;
-import com.didorenko.labs.lab3.Motorcycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,66 +27,44 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
     public void add(Motorcycle motorcycle) {
         final Motorcycle savedMotorcycle = motorcycleRepository.save(motorcycle);
 
-        Optional<Motorcycle> elementToInsertAfter = Optional.ofNullable(motorcycleRepository.findCapacityInsertionPosition(savedMotorcycle.getCapacity()));
+        Optional<Motorcycle> elementToInsertAfter = Optional.ofNullable(motorcycleRepository.findCapacityInsertionPosition(savedMotorcycle.getId(), savedMotorcycle.getCapacity()));
 
         if (!elementToInsertAfter.isPresent()) {
             addLastCapacity(savedMotorcycle);
             return;
+        } else if (isFirstCapacity(elementToInsertAfter.get())) {
+            addFirstCapacity(elementToInsertAfter.get(), savedMotorcycle);
+        } else {
+
+            commonAddCapacity(elementToInsertAfter.get(), savedMotorcycle);
         }
 
-        if (isFirst(elementToInsertAfter.get())) {
-            addFirst(elementToInsertAfter.get(), savedMotorcycle);
-            return;
-        }
 
-        commonAdd(elementToInsertAfter.get(), savedMotorcycle);
-
-
-        Optional<Motorcycle> elementToInsertAfterWeight = Optional.ofNullable(motorcycleRepository.findWeightInsertionPosition(savedMotorcycle.getWeight()));
+        Optional<Motorcycle> elementToInsertAfterWeight = Optional.ofNullable(motorcycleRepository.findWeightInsertionPosition(savedMotorcycle.getId(), savedMotorcycle.getWeight()));
 
         if (!elementToInsertAfterWeight.isPresent()) {
-            addLastCapacity(savedMotorcycle);
-            return;
-        }
-
-        if (isFirst(elementToInsertAfterWeight.get())) {
-            addFirst(elementToInsertAfterWeight.get(), savedMotorcycle);
-            return;
-        }
-
-        commonAdd(elementToInsertAfterWeight.get(), savedMotorcycle);
+            addLastWeight(savedMotorcycle);
+        } else if (isFirstWeight(elementToInsertAfterWeight.get())) {
+            addFirstWeight(elementToInsertAfterWeight.get(), savedMotorcycle);
+        } else commonAddWeight(elementToInsertAfterWeight.get(), savedMotorcycle);
 
 
-
-        Optional<Motorcycle> elementToInsertAfterPrice = Optional.ofNullable(motorcycleRepository.findPriceInsertionPosition(savedMotorcycle.getPrice()));
+        Optional<Motorcycle> elementToInsertAfterPrice = Optional.ofNullable(motorcycleRepository.findPriceInsertionPosition(savedMotorcycle.getId(), savedMotorcycle.getPrice()));
 
         if (!elementToInsertAfterPrice.isPresent()) {
-            addLastCapacity(savedMotorcycle);
-            return;
-        }
-
-        if (isFirst(elementToInsertAfterPrice.get())) {
-            addFirst(elementToInsertAfterPrice.get(), savedMotorcycle);
-            return;
-        }
-
-        commonAdd(elementToInsertAfterPrice.get(), savedMotorcycle);
+            addLastPrice(savedMotorcycle);
+        } else if (isFirstPrice(elementToInsertAfterPrice.get())) {
+            addFirstPrice(elementToInsertAfterPrice.get(), savedMotorcycle);
+        } else commonAddPrice(elementToInsertAfterPrice.get(), savedMotorcycle);
 
 
-
-        Optional<Motorcycle> elementToInsertAfterProducer = Optional.ofNullable(motorcycleRepository.findProducerInsertionPosition(savedMotorcycle.getProducer()));
+        Optional<Motorcycle> elementToInsertAfterProducer = Optional.ofNullable(motorcycleRepository.findProducerInsertionPosition(savedMotorcycle.getId(), savedMotorcycle.getProducer()));
 
         if (!elementToInsertAfterProducer.isPresent()) {
-            addLastCapacity(savedMotorcycle);
-            return;
-        }
-
-        if (isFirst(elementToInsertAfterProducer.get())) {
-            addFirst(elementToInsertAfterProducer.get(), savedMotorcycle);
-            return;
-        }
-
-        commonAdd(elementToInsertAfterProducer.get(), savedMotorcycle);
+            addLastProducer(savedMotorcycle);
+        } else if (isFirstProducer(elementToInsertAfterProducer.get())) {
+            addFirstProducer(elementToInsertAfterProducer.get(), savedMotorcycle);
+        } else commonAddProducer(elementToInsertAfterProducer.get(), savedMotorcycle);
     }
 
     public void remove(int id) {
@@ -110,7 +87,7 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
         motorcycleRepository.delete(id);
     }
 
-    private void commonAdd(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+    private void commonAddCapacity(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
         motorcycle.setNextCapacity(elementToInsertAfter.getNextCapacity());
         Motorcycle elementToInsertBefore = motorcycleRepository.findOne(elementToInsertAfter.getNextCapacity());
 
@@ -124,7 +101,7 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
         motorcycleRepository.save(elementToInsertBefore);
     }
 
-    private void addFirst(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+    private void addFirstCapacity(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
         motorcycle.setNextCapacity(elementToInsertAfter.getId());
         int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
 
@@ -132,7 +109,7 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
         motorcycleRepository.save(elementToInsertAfter);
     }
 
-    private boolean isFirst(Motorcycle motorcycle) {
+    private boolean isFirstCapacity(Motorcycle motorcycle) {
         return !Optional.ofNullable(motorcycle.getPreviousCapacity()).isPresent();
     }
 
@@ -144,6 +121,117 @@ public class Lab3 implements GenericLaboratoryWork<Motorcycle> {
 
         lastCapacityElement.setNextCapacity(savedId);
         motorcycleRepository.save(lastCapacityElement);
+    }
+
+
+    private void commonAddWeight(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextWeight(elementToInsertAfter.getNextWeight());
+        Motorcycle elementToInsertBefore = motorcycleRepository.findOne(elementToInsertAfter.getNextWeight());
+
+        motorcycle.setPreviousWeight(elementToInsertBefore.getPreviousWeight());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setNextWeight(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+
+        elementToInsertBefore.setPreviousWeight(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertBefore);
+    }
+
+    private void addFirstWeight(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextWeight(elementToInsertAfter.getId());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setPreviousWeight(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+    }
+
+    private boolean isFirstWeight(Motorcycle motorcycle) {
+        return !Optional.ofNullable(motorcycle.getPreviousWeight()).isPresent();
+    }
+
+    private void addLastWeight(Motorcycle motorcycle) {
+        Motorcycle lastWeightElement = motorcycleRepository.findLastWeight();
+
+        motorcycle.setPreviousWeight(lastWeightElement.getId());
+        final int savedId = motorcycleRepository.save(motorcycle).getId();
+
+        lastWeightElement.setNextWeight(savedId);
+        motorcycleRepository.save(lastWeightElement);
+    }
+
+
+    private void commonAddPrice(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextPrice(elementToInsertAfter.getNextPrice());
+        Motorcycle elementToInsertBefore = motorcycleRepository.findOne(elementToInsertAfter.getNextPrice());
+
+        motorcycle.setPreviousPrice(elementToInsertBefore.getPreviousPrice());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setNextPrice(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+
+        elementToInsertBefore.setPreviousPrice(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertBefore);
+    }
+
+    private void addFirstPrice(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextPrice(elementToInsertAfter.getId());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setPreviousPrice(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+    }
+
+    private boolean isFirstPrice(Motorcycle motorcycle) {
+        return !Optional.ofNullable(motorcycle.getPreviousPrice()).isPresent();
+    }
+
+    private void addLastPrice(Motorcycle motorcycle) {
+        Motorcycle lastPriceElement = motorcycleRepository.findLastPrice();
+
+        motorcycle.setPreviousPrice(lastPriceElement.getId());
+        final int savedId = motorcycleRepository.save(motorcycle).getId();
+
+        lastPriceElement.setNextPrice(savedId);
+        motorcycleRepository.save(lastPriceElement);
+    }
+
+
+    private void commonAddProducer(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextProducer(elementToInsertAfter.getNextProducer());
+        Motorcycle elementToInsertBefore = motorcycleRepository.findOne(elementToInsertAfter.getNextProducer());
+
+        motorcycle.setPreviousProducer(elementToInsertBefore.getPreviousProducer());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setNextProducer(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+
+        elementToInsertBefore.setPreviousProducer(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertBefore);
+    }
+
+    private void addFirstProducer(Motorcycle elementToInsertAfter, Motorcycle motorcycle) {
+        motorcycle.setNextProducer(elementToInsertAfter.getId());
+        int insertedMotorcycleId = motorcycleRepository.save(motorcycle).getId();
+
+        elementToInsertAfter.setPreviousProducer(insertedMotorcycleId);
+        motorcycleRepository.save(elementToInsertAfter);
+    }
+
+    private boolean isFirstProducer(Motorcycle motorcycle) {
+        return !Optional.ofNullable(motorcycle.getPreviousProducer()).isPresent();
+    }
+
+    private void addLastProducer(Motorcycle motorcycle) {
+        Motorcycle lastProducerElement = motorcycleRepository.findLastProducer();
+
+        motorcycle.setPreviousProducer(lastProducerElement.getId());
+        final int savedId = motorcycleRepository.save(motorcycle).getId();
+
+        lastProducerElement.setNextProducer(savedId);
+        motorcycleRepository.save(lastProducerElement);
     }
 
     public Motorcycle getLastCapacity() {
